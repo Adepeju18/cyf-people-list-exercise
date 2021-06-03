@@ -31,15 +31,25 @@ import React, { useState } from "react";
 const PeopleList = () => {
   const [people, setPeople] = useState(["Dave", "Alice", "Bob"]);
   const [newName, setNewName] = useState("");
-  const [filter, setFilter] = useState("");
+  //  const [filter, setFilter] = useState("");
 
   function addNewPerson() {
     const newPeople = [...people, newName];
     setPeople(newPeople);
   }
+  
   function removePerson(index){
-    const person = [...people, newName];
-    person.splice(index, 3)
+    const person = [...people];
+    const newPerson = person.pop();
+    person.filter((people)=>people !== newPerson);
+    setPeople(person);
+
+  }
+
+
+  function filterName(event){
+    let person = [...people];
+    person = person.filter((people) => people !== event.target.value);
     setPeople(person);
   }
 
@@ -58,12 +68,13 @@ const PeopleList = () => {
             type="text"
             onChange={(event) => setNewName(event.target.value)}
           />
-          <input type="text" 
-          value={filter}
-          onChange={(event) =>setFilter(event.target.value)}/>
+          
         </label>
         <button onClick={addNewPerson}>Add person</button>
-         <button onClick={removePerson}>Remove person</button>
+         <input type="text" onChange={filterName} />  
+        <input type="button" onClick={removePerson} value= "Remove Name"
+          
+          /> 
       </div>
     </div>
   );
